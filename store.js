@@ -53,7 +53,7 @@ const LocalStore = {
   async saveSettings(s) { this._set('ds_settings', s); },
   async uploadImage(dataUrl) { return dataUrl; },
   async login(_, pin) { if (pin !== CONFIG.adminPin) throw new Error('PIN salah'); localStorage.setItem('ds_admin', '1'); },
-  logout() { sessionStorage.removeItem('ds_admin'); },
+  logout() { localStorage.removeItem('ds_admin'); },
   isAdmin() { return sessionStorage.getItem('ds_admin') === '1'; },
   async sales(f, t) { return this._get('ds_sales', []).filter(x => x.at >= f && x.at < t).sort((a, b) => b.at.localeCompare(a.at)); },
   async addSale(x) { const l = this._get('ds_sales', []), r = { ...x, id: Date.now(), at: new Date().toISOString() }; l.push(r); this._set('ds_sales', l); return r; },
