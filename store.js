@@ -86,7 +86,7 @@ const RemoteStore = {
     const r = await fetch(`${this.base}/auth/v1/token?grant_type=${grant}`, { method: 'POST', headers: { apikey: CONFIG.supabaseKey, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const d = await r.json();
     if (!r.ok) throw new Error(CONFIG.adminEmail ? 'PIN salah. Coba lagi.' : 'Email atau PIN salah');
-    sessionStorage.setItem('ds_sess', JSON.stringify({ access_token: d.access_token, refresh_token: d.refresh_token }));
+    localStorage.setItem('ds_sess', JSON.stringify({ access_token: d.access_token, refresh_token: d.refresh_token }));
   },
   _in: r => ({ id: r.id, cat: r.cat, name: r.name, desc: r.description || '', price: r.price, status: r.status, image: r.image || '', info: r.info || {} }),
   _out: p => ({ cat: p.cat, name: p.name, description: p.desc, price: p.price, status: p.status, image: p.image, info: p.info }),
