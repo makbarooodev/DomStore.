@@ -67,7 +67,7 @@ const LocalStore = {
 const RemoteStore = {
   remote: true,
   base: CONFIG.supabaseUrl.replace(/\/$/, ''),
-  _tok() { try { return JSON.parse(sessionStorage.getItem('ds_sess')); } catch { return null; } },
+  _tok() { try { return JSON.parse(localStorage.getItem('ds_sess')); } catch { return null; } },
   async _req(path, { method = 'GET', body, auth = false, headers = {}, retry = true } = {}) {
     const s = this._tok();
     const h = { apikey: CONFIG.supabaseKey, ...headers };
