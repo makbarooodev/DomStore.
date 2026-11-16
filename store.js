@@ -52,7 +52,7 @@ const LocalStore = {
   async getSettings() { const x = this._get('ds_settings', {}); return { waNumber: x.waNumber || CONFIG.waNumber, messages: { ...DEFAULT_MSG, ...(x.messages || {}) } }; },
   async saveSettings(s) { this._set('ds_settings', s); },
   async uploadImage(dataUrl) { return dataUrl; },
-  async login(_, pin) { if (pin !== CONFIG.adminPin) throw new Error('PIN salah'); sessionStorage.setItem('ds_admin', '1'); },
+  async login(_, pin) { if (pin !== CONFIG.adminPin) throw new Error('PIN salah'); localStorage.setItem('ds_admin', '1'); },
   logout() { sessionStorage.removeItem('ds_admin'); },
   isAdmin() { return sessionStorage.getItem('ds_admin') === '1'; },
   async sales(f, t) { return this._get('ds_sales', []).filter(x => x.at >= f && x.at < t).sort((a, b) => b.at.localeCompare(a.at)); },
