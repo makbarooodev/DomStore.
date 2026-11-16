@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Dasbor Admin — DOMSTORE</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="store.js"></script>
+</head>
+<body>
+<header class="nav"><div class="wrap nav__in">
+  <a href="index.html" class="logo">DOM<span>STORE</span> <span>Admin</span></a>
+  <div class="nav__tools"><button class="btn tbtn" data-theme-toggle id="tbtn" aria-label="Ganti tema"></button><a class="btn btn--sm" href="index.html">Lihat Toko</a></div>
+</div></header>
+
+<main class="wrap">
+  <form class="login" id="login" hidden>
+    <h2>Masukkan PIN</h2>
+    <p class="note">Masukkan PIN untuk membuka dasbor admin.</p>
+    <label class="fld" id="emailWrap" hidden>Email admin<input type="email" id="email" autocomplete="username"></label>
+    <label class="fld"><span id="passLbl">PIN</span><input type="password" id="pin" autocomplete="current-password" placeholder="Masukkan PIN" autofocus required></label>
+    <button class="btn btn--primary">Log in</button>
+    <p class="note" id="loginErr"></p>
+  </form>
+
+  <section class="adm" id="dash" hidden>
+    <div class="adm__top">
+      <h2>Dasbor</h2>
+      <div class="row"><button class="btn btn--sm" id="settings">Pengaturan WhatsApp</button><button class="btn btn--sm" id="logout">Keluar</button></div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="kasir" aria-selected="true">Checkout</button>
+      <button class="tab" role="tab" data-tab="produk" aria-selected="false">Kelola Produk</button>
+      <button class="tab" role="tab" data-tab="rekap" aria-selected="false">Rekap</button>
+    </div>
+    <p class="note" id="modeNote"></p>
+
+    <div class="pane" id="tab-kasir">
+      <div class="pos">
+        <div>
+          <input type="search" id="posSearch" placeholder="Cari produk untuk kasir…" aria-label="Cari produk kasir">
+          <div id="posList" class="poslist"></div>
+          <button class="btn btn--sm" id="posManual" type="button">Tambahkan Item secara manual</button>
+        </div>
+        <div class="cart">
+          <h3>Keranjang</h3>
+          <div id="cartList"></div>
+          <div class="total"><span>Total</span><b id="cartTotal">Rp 0</b></div>
+          <label class="fld">Nama pelanggan<input id="cCust" maxlength="60"></label>
+          <label class="fld">Nomor WhatsApp pelanggan (opsional)<input id="cPhone" inputmode="tel" maxlength="20"></label>
+          <label class="fld">Pembayaran<select id="cMethod"><option>Tunai</option><option>Transfer</option><option>E-Wallet</option><option>Qris</option></select></label>
+          <label class="fld">Catatan<input id="cNote" maxlength="120"></label>
+          <button class="btn btn--primary" id="checkout" type="button">Selesaikan &amp; Buat Struk</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pane" id="tab-produk" hidden>
+      <div class="row" style="margin-bottom:16px">
+        <button class="btn btn--primary btn--sm" id="add">Tambah Produk</button>
+        <button class="btn btn--sm" id="export">Ekspor</button>
+        <button class="btn btn--sm" id="import">Impor</button>
+        <button class="btn btn--sm" id="reset">Reset Data</button>
+      </div>
+      <div class="stats" id="stats"></div>
+      <input type="search" id="search" placeholder="Cari produk…" aria-label="Cari produk" style="margin-bottom:16px">
+      <div id="list"></div>
+    </div>
+
+    <div class="pane" id="tab-rekap" hidden>
+      <div class="row rrow">
+        <label class="fld">Dari<input type="date" id="rFrom"></label>
+        <label class="fld">Sampai<input type="date" id="rTo"></label>
+        <button class="btn btn--sm" id="rToday" type="button">Hari ini</button>
+        <button class="btn btn--sm" id="r7" type="button">7 hari</button>
+        <button class="btn btn--sm" id="rMonth" type="button">Bulan ini</button>
+      </div>
+      <div class="stats" id="rStats"></div>
+      <p class="note" id="rNote"></p>
+      <h3 class="sech">Transaksi</h3>
+      <div id="rSales"></div>
+      <h3 class="sech">Biaya operasional</h3>
+      <form id="expF" class="row">
+        <input id="expLabel" class="inp" placeholder="Keterangan biaya" maxlength="80" required>
+        <input id="expAmt" class="inp" type="number" min="0" step="1" inputmode="numeric" placeholder="Jumlah (Rp)" required>
+        <button class="btn btn--sm btn--primary">Tambah</button>
+      </form>
+      <div id="rExp"></div>
+    </div>
+  </section>
+</main>
+
+<dialog id="pform">
+  <button class="close" id="pClose" aria-label="Tutup">×</button>
+  <h3 id="pTitle">Produk</h3>
+  <form id="f">
+    <label class="fld">Nama produk<input name="name" required maxlength="80"></label>
+    <label class="fld">Kategori<select name="cat" id="fcat"></select></label>
+    <label class="fld">Harga asli / modal (Rp)<input name="cost" type="number" min="0" step="1" inputmode="numeric"></label>
+    <label class="fld">Keuntungan (Rp)<input name="profit" type="number" step="1" inputmode="numeric"></label>
+    <label class="fld">Harga jual (Rp) — terisi otomatis dari modal + keuntungan<input name="price" type="number" min="0" step="1" inputmode="numeric"></label>
+    <label class="fld">Status<select name="status"><option value="">Belum diatur</option><option>Tersedia</option><option>Terbatas</option><option>Habis</option></select></label>
+    <label class="fld">Deskripsi<textarea name="desc" rows="3" maxlength="400"></textarea></label>
+    <label class="fld">Informasi tambahan — satu per baris, format Judul: isi<textarea name="info" rows="3" placeholder="Level: 50&#10;Server: Asia"></textarea></label>
+    <label class="fld">Gambar (bisa dipotong setelah dipilih)<input type="file" id="img" accept="image/*"></label>
+    <div class="thumb" id="prev" style="height:120px">Belum ada gambar</div>
+    <button type="button" class="btn btn--sm" id="rmImg">Hapus gambar</button>
+    <button class="btn btn--primary">Simpan</button>
+  </form>
+</dialog>
+
+<dialog id="cropDlg">
+  <h3>Potong Foto</h3>
+  <div class="row" id="cropAsp">
+    <button type="button" class="chip" data-a="1" aria-pressed="false">1:1</button>
+    <button type="button" class="chip" data-a="1.3333" aria-pressed="true">4:3</button>
+    <button type="button" class="chip" data-a="1.7778" aria-pressed="false">16:9</button>
+  </div>
+  <div class="crop" id="cropFrame"><img id="cropImg" alt=""></div>
+  <label class="fld">Perbesar<input type="range" id="cropZoom" min="1" max="3" step="0.01" value="1"></label>
+  <p class="note">Geser foto untuk mengatur posisi.</p>
+  <div class="row"><button type="button" class="btn" id="cropCancel">Batal</button><button type="button" class="btn btn--primary" id="cropOk">Pakai</button></div>
+</dialog>
+
+<dialog id="itemDlg">
+  <button class="close" id="itemClose" aria-label="Tutup">×</button>
+  <h3>Item Manual</h3>
+  <form id="itemF">
+    <label class="fld">Nama item<input name="name" required maxlength="80"></label>
+    <label class="fld">Harga jual (Rp)<input name="price" type="number" min="0" step="1" inputmode="numeric" required></label>
+    <label class="fld">Harga asli / modal (Rp) — opsional<input name="cost" type="number" min="0" step="1" inputmode="numeric"></label>
+    <button class="btn btn--primary">Tambah ke keranjang</button>
+  </form>
+</dialog>
+
+<dialog id="rcpDlg">
+  <button class="close" id="rcpClose" aria-label="Tutup">×</button>
+  <h3>Struk</h3>
+  <img id="rcpImg" alt="Struk pembelian" class="rcp">
+  <div class="row"><button class="btn btn--sm" id="rcpDl" type="button">Unduh JPG</button><button class="btn btn--primary btn--sm" id="rcpWa" type="button">Kirim ke WhatsApp</button></div>
+</dialog>
+
+<dialog id="sform">
+  <button class="close" id="sClose" aria-label="Tutup">×</button>
+  <h3>Pengaturan WhatsApp</h3>
+  <form id="sf">
+    <label class="fld">Nomor WhatsApp admin (format 62…)<input name="wa" inputmode="numeric" required></label>
+    <label class="fld">Pesan tombol pesan produk<textarea name="mProduct" rows="3" maxlength="500" required></textarea></label>
+    <p class="note">Variabel otomatis: {produk}, {kategori}, {harga}, {toko}.</p>
+    <p class="note" id="mPrev"></p>
+    <label class="fld">Pesan tombol "Hubungi Admin"<textarea name="mAdmin" rows="2" maxlength="500" required></textarea></label>
+    <label class="fld">Pesan tombol "Hubungi DomStore"<textarea name="mStore" rows="2" maxlength="500" required></textarea></label>
+    <label class="fld">Pesan saat mengirim struk<textarea name="mReceipt" rows="2" maxlength="500" required></textarea></label>
+    <p class="note">Variabel untuk struk: {nama}, {toko}, {total}.</p>
+    <button type="button" class="btn btn--sm" id="mReset">Kembalikan teks bawaan</button>
+    <button class="btn btn--primary">Simpan</button>
+  </form>
+</dialog>
+<input type="file" id="impFile" accept="application/json" hidden>
+<div class="toast" id="toast" role="status"></div>
+<script src="crop.js"></script>
+<script src="kasir.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
