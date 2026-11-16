@@ -125,7 +125,7 @@ const RemoteStore = {
   async addExpense(x) { const r = await this._req('/rest/v1/expenses', { method: 'POST', auth: true, headers: { Prefer: 'return=representation' }, body: { label: x.label, amount: x.amount } }); return this._exp(r[0]); },
   async removeExpense(id) { await this._req('/rest/v1/expenses?id=eq.' + encodeURIComponent(id), { method: 'DELETE', auth: true }); },
   login(email, pass) { return this._auth('password', { email: email || CONFIG.adminEmail, password: pass }); },
-  logout() { sessionStorage.removeItem('ds_sess'); },
+  logout() { localStorage.removeItem('ds_sess'); },
   isAdmin() { return !!this._tok(); }
 };
 const Store = CONFIG.supabaseUrl && CONFIG.supabaseKey ? RemoteStore : LocalStore;
