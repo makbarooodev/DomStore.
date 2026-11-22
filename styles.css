@@ -224,3 +224,8 @@ dialog{max-height:92dvh;overflow:auto}
   border-radius: 35px;
   background: none;
 }
+/* Sembunyikan keterangan di card katalog */
+.card > p,
+.card > .status {
+    display: none;
+}
