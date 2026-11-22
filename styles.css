@@ -230,3 +230,8 @@ dialog{max-height:92dvh;overflow:auto}
   background: none;
 }
 
+/* Hanya sembunyikan keterangan di card katalog */
+.card > p,
+.card > .status {
+    display: none;
+}
