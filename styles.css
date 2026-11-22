@@ -59,7 +59,7 @@ h1{font-size:clamp(2.4rem,9vw,4.6rem);line-height:1.05;margin-bottom:20px}
 .chip[aria-pressed=true]{background:var(--text);color:var(--bg);border-color:var(--text)}
 
 .grid{display:grid;gap:14px;grid-template-columns:repeat(2, 1fr)}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s}
 .card:hover{border-color:var(--mute)}
 .thumb{height:auto;border-radius:10px;background:repeating-linear-gradient(45deg,var(--s1),var(--s1) 10px,var(--s2) 10px,var(--s2) 20px);display:grid;place-items:center;color:var(--mute);font:500 .8rem var(--fh)}
 .card h3{font-size:1.02rem}
