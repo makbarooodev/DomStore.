@@ -230,7 +230,8 @@ dialog{max-height:92dvh;overflow:auto}
   background: none;
 }
 /* Sembunyikan keterangan di card katalog */
-.card > p,
-.card > .status {
+/* Sembunyikan keterangan hanya di katalog produk */
+#grid .card > p,
+#grid .card > .status {
     display: none;
 }
