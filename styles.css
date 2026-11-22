@@ -240,6 +240,6 @@ dialog{max-height:92dvh;overflow:auto}
 #kategori .cats,
 #kategori .tools,
 #kategori .grid {
-    width: calc(100% + 24px);
+    width: 100%;
     margin-left: -12px;
 }
