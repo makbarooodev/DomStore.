@@ -168,7 +168,7 @@ dialog form{display:grid;gap:14px;max-height:80dvh;overflow:auto}
 [hidden]{display:none!important}
 
 /* ===== Kartu produk: satu kolom di layar kecil ===== */
-@media(max-width:640px){.grid{grid-template-columns:1fr}}
+@media(max-width:640px){.grid{grid-template-columns:2fr}}
 
 /* ===== Zoom foto produk ===== */
 .thumb img{cursor:zoom-in}
