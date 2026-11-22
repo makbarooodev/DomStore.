@@ -235,3 +235,11 @@ dialog{max-height:92dvh;overflow:auto}
 .card > .status {
     display: none;
 }
+
+/* Atur margin horizontal katalog saja */
+#kategori .cats,
+#kategori .tools,
+#kategori .grid {
+    width: calc(100% + 24px);
+    margin-left: -12px;
+}
